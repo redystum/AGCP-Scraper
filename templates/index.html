@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AGCP Empty Room Scraper</title>
+    <style>
+        :root {
+            --bg-color: #121212;
+            --surface-color: #1e1e1e;
+            --primary-color: #bb86fc;
+            --secondary-color: #03dac6;
+            --text-primary: #e1e1e1;
+            --text-secondary: #a1a1a1;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        header {
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .search-form {
+            background-color: var(--surface-color);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-bottom: 2rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .checkbox-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .checkbox-row {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        label {
+            margin-bottom: 0.5rem;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        input, select {
+            background-color: #2d2d2d;
+            border: 1px solid #3d3d3d;
+            color: var(--text-primary);
+            padding: 0.75rem;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        input[type="checkbox"] {
+            width: 1.1rem;
+            height: 1.1rem;
+            accent-color: var(--primary-color);
+        }
+
+        button {
+            background-color: var(--primary-color);
+            color: #000;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 4px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            height: fit-content;
+        }
+
+        button:hover {
+            background-color: #a370d7;
+        }
+
+        .results {
+            background-color: var(--surface-color);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            margin-bottom: 1.5rem;
+            color: var(--secondary-color);
+        }
+
+        .classroom-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+        }
+
+        .classroom-card {
+            background-color: #2d2d2d;
+            padding: 1rem;
+            border-radius: 6px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .classroom-name {
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .classroom-details {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .no-results {
+            color: var(--text-secondary);
+            text-align: center;
+            padding: 2rem;
+        }
+
+        @media (max-width: 600px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <h1>AGCP Empty Room Scraper </h1>
+        <p>Since the AGCP is horrible, there's a missing feature
+    </header>
+
+    <main>
+        <form class="search-form">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="day">Day</label>
+                    <select id="day" name="day">
+                        <!-- Will be populated with days of current week via JavaScript -->
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="start-time">Start Time</label>
+                    <input type="time" id="start-time" name="start-time" value="09:00">
+                </div>
+
+                <div class="form-group">
+                    <label for="end-time">End Time</label>
+                    <input type="time" id="end-time" name="end-time" value="11:00">
+                </div>
+
+                <div class="form-group checkbox-group">
+                    <label>Floors</label>
+                    <div class="checkbox-row">
+                        <input type="checkbox" id="floor1" name="floors" value="0">
+                        <label for="floor1">Floor 0</label>
+                    </div>
+                    <div class="checkbox-row">
+                        <input type="checkbox" id="floor2" name="floors" value="1">
+                        <label for="floor2">Floor 1</label>
+                    </div>
+                    <div class="checkbox-row">
+                        <input type="checkbox" id="floor3" name="floors" value="2" checked>
+                        <label for="floor3">Floor 2</label>
+                    </div>
+                </div>
+
+                <button type="submit">Search</button>
+            </div>
+        </form>
+
+        <div class="results">
+            <h2>Available Classrooms</h2>
+            <div class="classroom-list" id="classroom-list">
+                <!-- Sample data will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>
+    // Function to display classrooms based on API response
+    function displayClassrooms(classrooms) {
+        const classroomList = document.getElementById('classroom-list');
+        classroomList.innerHTML = '';
+
+        if (!classrooms || classrooms.length === 0) {
+            classroomList.innerHTML = '<div class="no-results">No available classrooms found for the selected criteria.</div>';
+            return;
+        }
+
+        classrooms.forEach(classroom => {
+            const card = document.createElement('div');
+            card.className = 'classroom-card';
+            card.innerHTML = `
+                    <div class="classroom-name">${classroom.name}</div>
+                    <div class="classroom-details">
+                        <div>Building: ${classroom.building}</div>
+                        <div>Floor: ${classroom.floor}</div>
+                    </div>
+                `;
+            classroomList.appendChild(card);
+        });
+    }
+
+    // Show loading state
+    function showLoading() {
+        const classroomList = document.getElementById('classroom-list');
+        classroomList.innerHTML = '<div class="no-results">Searching for available classrooms...</div>';
+    }
+
+    // Format time for inputs (HH:MM)
+    function formatTimeForInput(date) {
+        const hours = date.getHours().toString().padStart(2, '0');
+        const minutes = date.getMinutes().toString().padStart(2, '0');
+        return `${hours}:${minutes}`;
+    }
+
+    // Format date for display (Day, Month DD)
+    function formatDateForDisplay(date) {
+        const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+        const dayName = days[date.getDay()];
+        const monthName = months[date.getMonth()];
+        const dayNum = date.getDate();
+
+        return `${dayName}, ${monthName} ${dayNum}`;
+    }
+
+    // Format date for value (YYYY-MM-DD)
+    function formatDateForValue(date) {
+        return date.toISOString().split('T')[0];
+    }
+
+    // Populate days dropdown with current week
+    function populateDaysDropdown() {
+        const daySelect = document.getElementById('day');
+        daySelect.innerHTML = ''; // Clear existing options
+
+        const today = new Date();
+        const currentDay = today.getDay();
+
+        // Get start of week (Monday)
+        const startOfWeek = new Date(today);
+        const mondayOffset = currentDay === 0 ? -6 : 1 - currentDay; // Handle Sunday
+        startOfWeek.setDate(today.getDate() + mondayOffset);
+
+        // Create options for Monday to Friday
+        for (let i = 0; i < 5; i++) { // 5 days (Mon-Fri)
+            const date = new Date(startOfWeek);
+            date.setDate(startOfWeek.getDate() + i);
+
+            const option = document.createElement('option');
+            option.value = formatDateForValue(date);
+            option.textContent = formatDateForDisplay(date);
+
+            // Set today as selected if it's a weekday (Mon-Fri)
+            const isToday = date.toDateString() === today.toDateString();
+            if (isToday) {
+                option.selected = true;
+            }
+
+            daySelect.appendChild(option);
+        }
+    }
+
+    // Set default times (current time and current time + 3 hours)
+    function setDefaultTimes() {
+        const now = new Date();
+
+        // Set start time to current time
+        const startTimeInput = document.getElementById('start-time');
+        startTimeInput.value = formatTimeForInput(now);
+
+        // Set end time to current time + 3 hours
+        const endTime = new Date(now);
+        endTime.setHours(now.getHours() + 3);
+        const endTimeInput = document.getElementById('end-time');
+        endTimeInput.value = formatTimeForInput(endTime);
+    }
+
+    // Initialize the form with today's date and current times
+    function initializeForm() {
+        populateDaysDropdown();
+        setDefaultTimes();
+    }
+
+    // Initialize when page loads
+    initializeForm();
+
+    // Initialize with empty state
+    document.getElementById('classroom-list').innerHTML = '<div class="no-results">Select search criteria and click Search to find available classrooms.</div>';
+
+    // Form submission handler
+    document.querySelector('.search-form').addEventListener('submit', async function(e) {
+        e.preventDefault();
+
+        // Get form data
+        const day = document.getElementById('day').value; // Now contains YYYY-MM-DD directly
+        const startTime = document.getElementById('start-time').value;
+        const endTime = document.getElementById('end-time').value;
+        const floorCheckboxes = document.querySelectorAll('input[name="floors"]:checked');
+        const selectedFloors = Array.from(floorCheckboxes).map(cb => cb.value);
+
+        // Validate inputs
+        if (!day || !startTime || !endTime || selectedFloors.length === 0) {
+            alert('Please fill in all fields and select at least one floor.');
+            return;
+        }
+
+        // The selected day is already in YYYY-MM-DD format
+        const formattedDate = day;
+
+        // Show loading state
+        showLoading();
+
+        try {
+            // Send request to backend
+            const response = await fetch('/empty_classrooms', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    day: formattedDate,
+                    startTime: startTime,
+                    endTime: endTime,
+                    floors: selectedFloors
+                })
+            });
+
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+            const data = await response.json();
+            displayClassrooms(data);
+
+        } catch (error) {
+            console.error('Error fetching classrooms:', error);
+            document.getElementById('classroom-list').innerHTML = 
+                `<div class="no-results">Error fetching classroom data: ${error.message}</div>`;
+        }
+    });
+</script>
+</body>
+</html>
