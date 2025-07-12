@@ -1,7 +1,7 @@
 import flask
 from datetime import datetime
 
-app = flask.Flask("AGCP Empty classroom")
+app = flask.Flask(__name__)
 @app.route('/')
 def index():
     # return the index page
